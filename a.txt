@@ -1,0 +1,1 @@
+https://api.telegram.org/bot378545358:AAHuQjkYspm0CYr-ZG9xF_h31CB7V-pF118/setWebhook?url=https://ahmadkybora.ir/bot/public/Cover.py

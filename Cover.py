@@ -74,7 +74,8 @@ def command_start(update: Update, context: CallbackContext) -> None:
 
     reset_user_data_context(context)
 
-    user = User.where('user_id', '=', user_id).first()
+    # user = User.where('user_id', '=', user_id).first()
+    user = "m"
 
     update.message.reply_text(
         translate_key_to(lp.START_MESSAGE, context.user_data['language']),
