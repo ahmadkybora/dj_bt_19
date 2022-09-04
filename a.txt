@@ -1,2 +1,6 @@
 https://api.telegram.org/bot378545358:AAHuQjkYspm0CYr-ZG9xF_h31CB7V-pF118/setWebhook?url=https://ahmadkybora.ir/bot/public/Cover.py
 https://api.telegram.org/bot434941139:AAG1Apadczm8qIT9AzT-E3BLRI9_wRIZtd4/setWebhook?url=https://ahmadkybora.ir/bot/public/Cover.py
+https://api.telegram.org/bot434941139:AAG1Apadczm8qIT9AzT-E3BLRI9_wRIZt
+
+
+https://api.telegram.org/bot353909760:AAEvjTzsEpcW3XjMcFwtMFvPh6qE1g3nszk/setWebhook?url=https://de42-185-202-113-162.eu.ngrok.io
