@@ -46,7 +46,8 @@ from members.models import Admin, User
 ####################
 # Global variables #
 ####################
-BOT_TOKEN = "378545358:AAHuQjkYspm0CYr-ZG9xF_h31CB7V-pF118"
+# BOT_TOKEN = "378545358:AAHuQjkYspm0CYr-ZG9xF_h31CB7V-pF118"
+BOT_TOKEN = "434941139:AAG1Apadczm8qIT9AzT-E3BLRI9_wRIZtd4"
 BOT_USERNAME = os.getenv("BOT_USERNAME")
 
 
@@ -723,14 +724,22 @@ def finish_editing_tags(update: Update, context: CallbackContext) -> None:
 
     try:
         with open(music_path, 'rb') as music_file:
-            context.bot.send_audio(
+            context.bot.send_document(
                 audio=music_file,
                 duration=user_data['music_duration'],
                 chat_id=update.message.chat_id,
                 caption=f"🆔 {BOT_USERNAME}",
+                thumb=open('user_photo.png', 'rb').read(),
                 reply_markup=start_over_button_keyboard,
                 reply_to_message_id=user_data['music_message_id']
             )
+            # chat_id = update.message.chat_id
+            # context.bot.send_document(
+            #     chat_id, 
+            #     document=open('user_music.mp3', 'rb'), 
+            #     caption='the video', 
+            #     thumb=open('user_photo.png', 'rb').read()
+            # )
     except (TelegramError, BaseException) as error:
         message.reply_text(
             translate_key_to(lp.ERR_ON_UPLOADING, lang),
