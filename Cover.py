@@ -20,6 +20,8 @@ from datetime import datetime
 #######################
 import psutil
 import music_tag
+from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, APIC, TIT2, TT2, TALB
 from persiantools import digits
 from telegram.error import TelegramError
 from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters, \
@@ -729,21 +731,56 @@ def finish_editing_tags(update: Update, context: CallbackContext) -> None:
 
     try:
         with open(music_path, 'rb') as music_file:
+            # context.bot.send_audio(
+            #     audio=music_file,
+            #     duration=user_data['music_duration'],
+            #     chat_id=update.message.chat_id,
+            #     caption=f"🆔 {BOT_USERNAME}",
+            #     reply_markup=start_over_button_keyboard,
+            #     reply_to_message_id=user_data['music_message_id'],
+            #     thumb=open('user_photo.png', 'rb').read()
+            # )
+            audio = MP3('user_music.mp3', ID3=ID3)   
+
+            id3 = ID3('user_music.mp3')
+            if id3.getall('APIC'):
+                audio.save()
+
+            try:
+                audio.add_tags()
+            except:
+                pass
+            
+            audio.tags.add(APIC(
+                encoding=3,
+                mime='image/png',
+                type=3,
+                desc=u'Cover',
+                data=open('user_photo.png', 'rb').read()
+            ))
+            chat_id = update.message.chat_id
             context.bot.send_document(
-                audio=music_file,
-                duration=user_data['music_duration'],
-                chat_id=update.message.chat_id,
-                caption=f"🆔 {BOT_USERNAME}",
-                thumb=open('user_photo.png', 'rb').read(),
-                reply_markup=start_over_button_keyboard,
-                reply_to_message_id=user_data['music_message_id']
+                chat_id, document=open('user_music.mp3', 'rb'), 
+                caption='the video', 
+                thumb=open('user_photo.png', 'rb').read()
             )
+            logger.error("salam")
+            # context.bot.send_document(
+            #     audio=music_file,
+            #     duration=user_data['music_duration'],
+            #     chat_id=update.message.chat_id,
+            #     caption=f"🆔 {BOT_USERNAME}",
+            #     thumb=open('user_photo.png', 'rb').read(),
+            #     reply_markup=start_over_button_keyboard,
+            #     reply_to_message_id=user_data['music_message_id']
+            #     thumb=open('user_photo.png', 'rb').read(),
+            # )
             # chat_id = update.message.chat_id
             # context.bot.send_document(
             #     chat_id, 
             #     document=open('user_music.mp3', 'rb'), 
             #     caption='the video', 
-            #     thumb=open('user_photo.png', 'rb').read()
+
             # )
     except (TelegramError, BaseException) as error:
         message.reply_text(
